@@ -1,0 +1,702 @@
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0px">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#/dashboard">W&P Controller</a>
+        </div>
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="#/dashboard"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#/cpanel"><i class="fa fa-dashboard fa-fw"></i>Control Panel</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Dashboard</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <!-- Tank 1 row Start-->
+        <div class="row" ng-controller="graphController">
+            <div class="col-lg-12">
+                <!-- Start of Holding Tank Section-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-target="#collapse1">Holding Tank</a>
+                        </h4>        
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse row">
+                        <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h3 class="text-box">Water Temperature</h3>
+                                    <div class="col-xs-12">
+                                        <div 
+                                            area-chart
+                                            area-data='holding_wtemp_data'
+                                            area-xkey='time'
+                                            area-ykeys='["value"]'
+                                            area-labels='["Temperature"]'
+                                            area-colors='["#c7254e"]'
+                                            area-point-size='5'
+                                            area-parse-time="false"
+                                            >
+                                        </div>                                         
+                                    </div>
+                                </div>                        
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h3 class="text-box">Env. Humidity</h3>
+                                    <div class="col-xs-12">
+                                        <div 
+                                            area-chart
+                                            area-data='holding_ehumidity_data'
+                                            area-xkey='time'
+                                            area-ykeys='["value"]'
+                                            area-labels='["Humidity"]'
+                                            area-colors='["#c7254e"]'
+                                            area-point-size='5'
+                                            area-parse-time="false"
+                                            >
+                                        </div>                                        
+                                    </div>
+                                </div>                        
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h3 class="text-box">Env. Temperature</h3>
+                                    <div class="col-xs-12">
+                                        <div 
+                                            area-chart
+                                            area-data='holding_etemp_data'
+                                            area-xkey='time'
+                                            area-ykeys='["value"]'
+                                            area-labels='["Humidity"]'
+                                            area-colors='["#c7254e"]'
+                                            area-point-size='5'
+                                            area-parse-time="false"
+                                            >
+                                        </div>                                        
+                                    </div>
+                                </div>                        
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                            <div class="panel panel-default" style="min-height: 440px;">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <h3 style="text-align: center">Values</h3>
+                                        <div class="col-xs-12">
+                                            <p>Water Temperature: {{holding_current_wtemp}}</p>
+                                            <p>Env. Temperature: {{holding_current_etemp}}</p>
+                                            <p>Env. Humidity: {{holding_current_ehumidity}}</p>
+                                            <p>Timestamp: {{holding_current_timestamp}}</p>                                         
+                                        </div>    
+                                    </div>
+                                </div>                        
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                            <div class="panel panel-default" style="min-height: 440px;">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <h3 style="text-align: center">Sensors</h3>
+                                        <div class="col-xs-6" style="margin: 20px 0px 0px 0px;">
+                                            <div class="led-box">
+                                                <div class="{{holding_pump_led}}"></div>
+                                                <p>Pump</p>
+                                            </div>    
+                                        </div>                                                
+                                        <div class="col-xs-6" style="margin: 20px 0px 0px 0px;">
+                                            <div class="led-box">
+                                                <div class="{{holding_wtemp_led}}"></div>
+                                                <p>Water Temperature</p>
+                                            </div>    
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6" style="margin: 20px 0px 0px 0px;">
+                                            <div class="led-box">
+                                                <div class="{{holding_etemp_led}}"></div>
+                                                <p>Env. Temperature</p>
+                                            </div>    
+                                        </div>
+                                        <div class="col-xs-6" style="margin: 20px 0px 0px 0px;">
+                                            <div class="led-box">
+                                                <div class="{{holding_ehumidity_led}}"></div>
+                                                <p>Env. Humidity</p>
+                                            </div>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                            
+                    </div>
+                </div>
+                <!-- End of Holding Tank Section-->
+                <!-- Start of Cleaning Tank#1 Section-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-target="#collapse2">Cleaning Tank #1</a>
+                        </h4>        
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div id="collapse2" class="panel-collapse collapse row">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Water Temperature</h3>
+                                            <div class="col-xs-12">
+                                                <div 
+                                                    area-chart
+                                                    area-data='tank1_wtemp_data'
+                                                    area-xkey='time'
+                                                    area-ykeys='["value"]'
+                                                    area-labels='["Temperature"]'
+                                                    area-colors='["#c7254e"]'
+                                                    area-point-size='5'
+                                                    area-parse-time="false"
+                                                    >
+                                                </div>                                         
+                                            </div>
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Env. Humidity</h3>
+                                            <div class="col-xs-12">
+                                                <div 
+                                                    area-chart
+                                                    area-data='tank1_ehumidity_data'
+                                                    area-xkey='time'
+                                                    area-ykeys='["value"]'
+                                                    area-labels='["Humidity"]'
+                                                    area-colors='["#c7254e"]'
+                                                    area-point-size='5'
+                                                    area-parse-time="false"
+                                                    >
+                                                </div>                                        
+                                            </div>
+           
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Env. Temperature</h3>
+                                            <div class="col-xs-12">
+                                                <div 
+                                                    area-chart
+                                                    area-data='tank1_etemp_data'
+                                                    area-xkey='time'
+                                                    area-ykeys='["value"]'
+                                                    area-labels='["Temperature"]'
+                                                    area-colors='["#c7254e"]'
+                                                    area-point-size='5'
+                                                    area-parse-time="false"
+                                                    >
+                                                </div>                                        
+                                            </div>
+           
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Water Level</h1>
+                                            <div class="col-xs-12">
+                                                <div
+                                                    line-chart
+                                                    line-data='tank1_level_data'
+                                                    line-xkey='a'
+                                                    line-ykeys='["y1", "y2"]'
+                                                    line-labels='["", ""]'
+                                                    line-colors='["", "#c7254e"]'
+                                                    line-point-size='10'
+                                                    line-hide-hover="'always'">
+                                                </div>                                        
+                                            </div> 
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default" style="min-height: 440px;">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <h3 style="text-align: center">Values</h3>
+                                                <div class="col-xs-12">
+                                                    <p>Water Temperature: {{tank1_current_wtemp}}</p>
+                                                    <p>Water Flow: {{tank1_current_flow}}</p>
+                                                    <p>Water Level: {{tank1_current_level}}</p>
+                                                    <p>Env. Humidity: {{tank1_current_ehumidity}}</p>
+                                                    <p>Env. Temperature: {{tank1_current_etemp}}</p>
+                                                    <p>Timestamp: {{tank1_current_timestamp}}</p>                                         
+                                                </div>    
+                                            </div>
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default" style="min-height: 440px;">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <h3 style="text-align: center">Sensors</h3>
+                                                <div class="col-xs-6" style="margin: 10px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank1_pump1_led}}"></div>
+                                                        <p>Pump 1</p>
+                                                    </div>    
+                                                </div>
+                                                <div class="col-xs-6" style="margin: 10px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank1_pump2_led}}"></div>
+                                                        <p>Pump 2</p>
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank1_etemp_led}}"></div>
+                                                        <p>Env. Temperature</p>
+                                                    </div>    
+                                                </div>
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank1_wtemp_led}}"></div>
+                                                        <p>Water Temperature</p>
+                                                    </div>    
+                                                </div>                                                  
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank1_level_led}}"></div>
+                                                        <p>Water Level</p>
+                                                    </div> 
+                                                </div>
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank1_flow_led}}"></div>
+                                                        <p>Water Flow</p>
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6" style="margin: 10px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank1_ehumidity_led}}"></div>
+                                                        <p>Env. Humidity</p>
+                                                    </div>    
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                    </div>
+
+                    <!-- /.panel-body -->
+                </div>
+                <!-- End of Cleaning Tank#1 Section-->
+                <!-- Start of Cleaning Tank#2 Section-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-target="#collapse3">Cleaning Tank #2</a>
+                        </h4>        
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div id="collapse3" class="panel-collapse collapse row">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Water Temperature</h3>
+                                            <div class="col-xs-12">
+                                                <div 
+                                                    area-chart
+                                                    area-data='tank2_wtemp_data'
+                                                    area-xkey='time'
+                                                    area-ykeys='["value"]'
+                                                    area-labels='["Flow"]'
+                                                    area-colors='["#c7254e"]'
+                                                    area-point-size='5'
+                                                    area-parse-time="false"
+                                                    >
+                                                </div>                                         
+                                            </div>
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Env. Pressure</h3>
+                                            <div class="col-xs-12">
+                                                <div 
+                                                    area-chart
+                                                    area-data='tank2_epressure_data'
+                                                    area-xkey='time'
+                                                    area-ykeys='["value"]'
+                                                    area-labels='["Flow"]'
+                                                    area-colors='["#c7254e"]'
+                                                    area-point-size='5'
+                                                    area-parse-time="false"
+                                                    >
+                                                </div>                                         
+                                            </div>
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Env. Temperature</h3>
+                                            <div class="col-xs-12">
+                                                <div 
+                                                    area-chart
+                                                    area-data='tank2_etemp_data'
+                                                    area-xkey='time'
+                                                    area-ykeys='["value"]'
+                                                    area-labels='["Temperature"]'
+                                                    area-colors='["#c7254e"]'
+                                                    area-point-size='5'
+                                                    area-parse-time="false"
+                                                    >
+                                                </div>                                         
+                                            </div>
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Peristalic #1</h1>
+                                            <div class="col-xs-12">
+                                                <div 
+                                                    area-chart
+                                                    area-data='tank2_peris1_data'
+                                                    area-xkey='time'
+                                                    area-ykeys='["value"]'
+                                                    area-labels='["Peristalic 1"]'
+                                                    area-colors='["#c7254e"]'
+                                                    area-point-size='5'
+                                                    area-parse-time="false"
+                                                    >
+                                                </div>                                        
+                                            </div> 
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Peristalic #2</h1>
+                                            <div class="col-xs-12">
+                                                <div 
+                                                    area-chart
+                                                    area-data='tank2_peris2_data'
+                                                    area-xkey='time'
+                                                    area-ykeys='["value"]'
+                                                    area-labels='["Peristalic 2"]'
+                                                    area-colors='["#c7254e"]'
+                                                    area-point-size='5'
+                                                    area-parse-time="false"
+                                                    >
+                                                </div>                                        
+                                            </div> 
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default" style="min-height: 440px;">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <h3 style="text-align: center">Values</h3>
+                                                <div class="col-xs-12">
+                                                    <p>Pump #1 Volume: {{tank2_current_pump1}}</p>
+                                                    <p>Water Temperature: {{tank2_current_wtemp}}</p>
+                                                    <p>Env. Temperature: {{tank2_current_etemp}}</p>
+                                                    <p>Env. Pressure: {{tank2_current_epressure}}</p>
+                                                    <p>Peristalic #1 Volume: {{tank2_current_peris1}}</p>
+                                                    <p>Peristalic #2 Volume: {{tank2_current_peris2}}</p>
+                                                    <p>Timestamp: {{tank2_current_timestamp}}</p>                                         
+                                                </div>    
+                                            </div>
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default" style="min-height: 440px;">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <h3 style="text-align: center">Sensors</h3>
+                                                <div class="col-xs-6" style="margin: 10px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank2_pump1_led}}"></div>
+                                                        <p>Pump #1</p>
+                                                    </div>    
+                                                </div>                                                
+                                            </div>
+                                             <div class="row">
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank2_wtemp_led}}"></div>
+                                                        <p>Water Temperature</p>
+                                                    </div>    
+                                                </div>
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank2_epressure_led}}"></div>
+                                                        <p>Env. Pressure</p>
+                                                    </div>    
+                                                </div>                                                  
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank2_etemp_led}}"></div>
+                                                        <p>Env. Temperature</p>
+                                                    </div>    
+                                                </div>
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank2_peris1_led}}"></div>
+                                                        <p>Peristalic #1</p>
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank2_peris2_led}}"></div>
+                                                        <p>Peristalic #2</p>
+                                                    </div>    
+                                                </div> 
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank2_stepper_led}}"></div>
+                                                        <p>Stepper Motor</p>
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.col-lg-4 (nested) -->
+                                <div class="col-lg-8">
+                                    <div id="morris-bar-chart"></div>
+                                </div>
+                                <!-- /.col-lg-8 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                    </div>
+
+                    <!-- /.panel-body -->
+                </div>
+                <!-- End of Cleaning Tank#2 Section-->
+                <!-- Start of Cleaning Tank#3 Section-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-target="#collapse4">Cleaning Tank #3</a>
+                        </h4>        
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div id="collapse4" class="panel-collapse collapse row">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Water Temperature</h3>
+                                            <div class="col-xs-12">
+                                                <div 
+                                                    area-chart
+                                                    area-data='tank3_wtemp_data'
+                                                    area-xkey='time'
+                                                    area-ykeys='["value"]'
+                                                    area-labels='["Temperature"]'
+                                                    area-colors='["#c7254e"]'
+                                                    area-point-size='5'
+                                                    area-parse-time="false"
+                                                    >
+                                                </div>                                         
+                                            </div>
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Env. Pressure</h3>
+                                            <div class="col-xs-12">
+                                                <div 
+                                                    area-chart
+                                                    area-data='tank3_epressure_data'
+                                                    area-xkey='time'
+                                                    area-ykeys='["value"]'
+                                                    area-labels='["Pressure"]'
+                                                    area-colors='["#c7254e"]'
+                                                    area-point-size='5'
+                                                    area-parse-time="false"
+                                                    >
+                                                </div>                                        
+                                            </div>
+           
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3 class="text-box">Env. Temperature</h3>
+                                            <div class="col-xs-12">
+                                                <div 
+                                                    area-chart
+                                                    area-data='tank3_etemp_data'
+                                                    area-xkey='time'
+                                                    area-ykeys='["value"]'
+                                                    area-labels='["Pressure"]'
+                                                    area-colors='["#c7254e"]'
+                                                    area-point-size='5'
+                                                    area-parse-time="false"
+                                                    >
+                                                </div>                                        
+                                            </div>
+           
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default" style="min-height: 440px;">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <h3 style="text-align: center">Values</h3>
+                                                <div class="col-xs-12">
+                                                    <p>Water Temperature: {{tank3_current_wtemp}}</p>
+                                                    <p>Env. Temperature: {{tank3_current_etemp}}</p>
+                                                    <p>Env. Pressure: {{tank3_current_epressure}}</p>
+                                                    <p>UV Array: {{tank3_uv_current}}</p>
+                                                    <p>UV Panel: {{tank3_panel_current}}</p>
+                                                    <p>Timestamp: {{tank3_timestamp_current}}</p>                                         
+                                                </div>    
+                                            </div>
+                                        </div>                        
+                                    </div>
+                                </div>
+                                <div class="col-xs-3" style="margin: 10px 0px 0px 0px;">
+                                    <div class="panel panel-default" style="min-height: 440px;">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <h3 style="text-align: center">Sensors</h3>
+                                                <div class="col-xs-6" style="margin: 10px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank3_wtemp_led}}"></div>
+                                                        <p>Water Temperature</p>
+                                                    </div>    
+                                                </div>                                                
+                                                <div class="col-xs-6" style="margin: 10px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank3_epressure_led}}"></div>
+                                                        <p>Env. Pressure</p>
+                                                    </div>    
+                                                </div> 
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank3_etemp_led}}"></div>
+                                                        <p>Env. Temperature</p>
+                                                    </div>    
+                                                </div>
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank3_uv_panel}}"></div>
+                                                        <p>UV Panel</p>
+                                                    </div>    
+                                                </div>                                                  
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank3_uv_array}}"></div>
+                                                        <p>UV Array</p>
+                                                    </div>    
+                                                </div>
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank3_bubbler1_led}}"></div>
+                                                        <p>Bubbler 1</p>
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank3_bubbler2_led}}"></div>
+                                                        <p>Bubbler 2</p>
+                                                    </div>    
+                                                </div>
+                                                <div class="col-xs-6" style="margin: 30px 0px 0px 0px;">
+                                                    <div class="led-box">
+                                                        <div class="{{tank3_pump_led}}"></div>
+                                                        <p>Pump</p>
+                                                    </div>    
+                                                </div>                                                  
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.col-lg-4 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                    </div>
+
+                    <!-- /.panel-body -->
+                </div>
+                <!-- End of Cleaning Tank#3 Section-->
+            </div>
+            <!-- /.col-lg-8 -->
+        <!-- /.Tank 1 row End -->   
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+

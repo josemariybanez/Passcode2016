@@ -1,0 +1,456 @@
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0px">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#/dashboard">W&P Controller</a>
+        </div>
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="#/dashboard"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#/cpanel"><i class="fa fa-dashboard fa-fw"></i>Control Panel</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+    <!-- start page-wrapper-->
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Control Panel</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="row" ng-controller="cpanelController">
+            <div class="col-lg-12">
+                <!-- Start of Holding Tank Section-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a>Dynamic Editor</a>
+                        </h4>        
+                    </div>
+                   
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-5" style="margin: 0px 0px 0px 20px;">
+                                <h4>Pick Tank</h4>
+                                <select ng-model="tankDropdown">
+                                <option value="holding">Holding Tank</option>
+                                <option value="tank1">Tank No. 1</option>
+                                <option value="tank2">Tank No. 2</option>
+                                <option value="tank3">Tank No. 3</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-5" style="margin: 0px 0px 0px 20px;">
+                                <h4>Pick Sensor</h4>
+                                <select ng-show="tankDropdown=='holding'" ng-model="h1sensorDropdown">
+                                    <option value="wtemp">Water Temperature</option>
+                                    <option value="etemp">Environment Temperature</option>
+                                    <option value="ehumidity">Environment Humidity</option>
+                                </select>
+                                <select ng-show="tankDropdown=='tank1'" ng-model="t1sensorDropdown">
+                                    <option value="wlevel">Water Level</option>
+                                    <option value="wflow">Water Flow</option>
+                                    <option value="wtemp">Water Temperature</option>
+                                    <option value="etemp">Environment Temperature</option>
+                                    <option value="epressure">Environment Pressure</option>
+                                </select>
+                                <select ng-show="tankDropdown=='tank2'" ng-model="t2sensorDropdown">
+                                    <option value="wtemp">Water Temperature</option>
+                                    <option value="etemp">Environment Temperature</option>
+                                    <option value="epressure">Environment Pressure</option>
+                                </select>
+                                <select ng-show="tankDropdown=='tank3'" ng-model="t3sensorDropdown">
+                                    <option value="wtemp">Water Temperature</option>
+                                    <option value="etemp">Environment Temperature</option>
+                                    <option value="epressure">Environment Pressure</option>
+                                </select>
+
+                            </div>
+                        </div>
+                            <form ng-show="tankDropdown=='holding'" ng-submit="panelInput()">
+                                <div class="row">
+                                    <div class="col-lg-5" style="margin: 20px 20px 0px 20px;">
+                                    <label>Switches</label>
+                                        <div class="form-group">
+                                            <div class="col-xs-6">
+                                                <div class="led-box" style="margin: 20px 0px 0px 0px;">
+                                                    <div id="holding_pump" ng-click="toggle(holding_pump_led, $event)" class="{{holding_pump_led}}"></div>
+                                                    <p>Pump No. 1</p>
+                                                </div>
+                                            </div>                                           
+                                        </div> 
+                                    </div>
+                                    <div class="col-lg-5" style="margin: 20px 0px 0px 20px;">
+                                        <div ng-show="h1sensorDropdown=='wtemp'" class="form-group">
+                                            <label>Water Temperature</label>
+                                            <input class="form-control" ng-model="holding_input_wtemp_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="holding_input_wtemp_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>
+                                        <div ng-show="h1sensorDropdown=='etemp'" class="form-group">
+                                            <label>Environment Temperature</label>
+                                            <input class="form-control" ng-model="holding_input_etemp_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="holding_input_etemp_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>
+                                        <div ng-show="h1sensorDropdown=='ehumidity'" class="form-group">
+                                            <label>Environment Humidity</label>
+                                            <input class="form-control" ng-model="holding_input_ehumidity_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="holding_input_ehumidity_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>                                       
+                                    </div>
+                                    <div ng-show="h1sensorDropdown=='wtemp'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="holding_wtemp_actions">
+                                    </div>
+                                    <div ng-show="h1sensorDropdown=='etemp'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="holding_etemp_actions">
+                                    </div>
+                                    <div ng-show="h1sensorDropdown=='ehumidity'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="holding_ehumidity_actions">
+                                    </div>
+                                    <!-- Possible Option/Combobox for JSON ACTIONS
+                                    <div class="col-lg-10" style="margin: 20px 20px 0px 20px;">
+                                    <label>Update Actions</label>
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <select ng-model="minmaxDropdown">
+                                                <option value="min">Min</option>
+                                                <option value="max">Max</option>
+                                                </select>
+                                                <select ng-model="actionDropdown">
+                                                <option value="on">On</option>
+                                                <option value="off">Off</option>
+                                                <option value="cmd">CMD</option>
+                                                <option value="alert">ALERT</option>
+                                                </select>
+                                                <p>Destination Tank</p>
+                                                <select ng-model="destDropdown">
+                                                <option value="holding">Holding Tank</option>
+                                                <option value="tank1">Tank 1</option>
+                                                <option value="tank2">Tank 2</option>
+                                                <option value="tank3">Tank 3</option>
+                                                </select>
+                                            </div>                                           
+                                        </div> 
+                                    </div>
+                                    -->
+                                    <!-- end col-lg-6 -->
+                                    <div class="col-lg-12">
+                                        <button type="submit" class="btn btn-lg btn-success btn-block" style="margin: 20px 0px 0px 0px;">Submit</button>   
+                                    </div>
+                                </div>
+                            </form>
+                            <form ng-show="tankDropdown=='tank1'" ng-submit="panelInput()">
+                                <div class="row">
+                                    <div class="col-lg-5" style="margin: 20px 0px 0px 20px;">
+                                    <label>Switches</label>
+                                        <div class="form-group">
+                                            <div class="col-xs-6">
+                                                <div class="led-box" style="margin: 20px 0px 0px 0px;">
+                                                    <div id="tank1_pump1" ng-click="toggle(tank1_pump1_led, $event)" class="{{tank1_pump1_led}}"></div>
+                                                    <p>Pump No. 1</p>
+                                                </div>
+                                                <div class="led-box" style="margin: 20px 0px 0px 0px;">
+                                                    <div id="tank1_pump2" ng-click="toggle(tank1_pump2_led, $event)" class="{{tank1_pump2_led}}"></div>
+                                                    <p>Pump No. 2</p>
+                                                </div>
+                                            </div>                                           
+                                        </div>                                        
+                                    </div>
+                                    <div class="col-lg-5" style="margin: 20px 0px 0px 20px;">                                  
+                                        <div ng-show="t1sensorDropdown=='wlevel'" class="form-group">
+                                            <label>Water Level</label>
+                                            <input class="form-control" ng-model="tank1_input_level_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="tank1_input_level_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>
+                                        <div ng-show="t1sensorDropdown=='wflow'" class="form-group">
+                                            <label>Water Flow</label>
+                                            <input class="form-control" ng-model="tank1_input_flow_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="tank1_input_flow_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>
+                                        <div ng-show="t1sensorDropdown=='wtemp'" class="form-group">
+                                            <label>Water Temperature</label>
+                                            <input class="form-control" ng-model="tank1_input_wtemp_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="tank1_input_wtemp_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>
+                                        <div ng-show="t1sensorDropdown=='etemp'" class="form-group">
+                                            <label>Environment Temperature</label>
+                                            <input class="form-control" ng-model="tank1_input_etemp_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="tank1_input_etemp_high" style="margin: 1px 0px 0px 0px;">
+                                           
+                                        </div>
+                                        <div ng-show="t1sensorDropdown=='epressure'" class="form-group">
+                                            <label>Environemnt Pressure</label>
+                                            <input class="form-control" ng-model="tank1_input_epressure_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="tank1_input_epressure_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>
+                                    </div>
+                                    <div ng-show="t1sensorDropdown=='wlevel'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="tank1_wlevel_actions">
+                                    </div>
+                                    <div ng-show="t1sensorDropdown=='wflow'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="tank1_wflow_actions">
+                                    </div>
+                                    <div ng-show="t1sensorDropdown=='wtemp'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="tank1_wtemp_actions">
+                                    </div>
+                                    <div ng-show="t1sensorDropdown=='etemp'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="tank1_etemp_actions">
+                                    </div>
+                                    <div ng-show="t1sensorDropdown=='epressure'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="tank1_epressure_actions">
+                                    </div>
+                                    <!-- end col-lg-6 -->
+                                    <!-- Possible Option/Combobox for JSON ACTIONS
+                                    <div class="col-lg-10" style="margin: 20px 20px 0px 20px;">
+                                    <label>Update Actions</label>
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <select ng-model="minmaxDropdown">
+                                                <option value="min">Min</option>
+                                                <option value="max">Max</option>
+                                                </select>
+                                                <select ng-model="actionDropdown">
+                                                <option value="on">On</option>
+                                                <option value="off">Off</option>
+                                                <option value="cmd">CMD</option>
+                                                <option value="alert">ALERT</option>
+                                                </select>
+                                                <p>Destination Tank</p>
+                                                <select ng-model="destDropdown">
+                                                <option value="holding">Holding Tank</option>
+                                                <option value="tank1">Tank 1</option>
+                                                <option value="tank2">Tank 2</option>
+                                                <option value="tank3">Tank 3</option>
+                                                </select>
+                                            </div>                                           
+                                        </div> 
+                                    </div>
+                                    -->
+
+                                    <div class="col-lg-12" style="margin: 20px 0px 0px 0px;">
+                                        <button type="submit" class="btn btn-lg btn-success btn-block">Submit</button>   
+                                    </div>
+                                </div>
+                            </form>
+                            <form ng-show="tankDropdown=='tank2'" ng-submit="panelInput()">
+                                <div class="row">
+                                    <div class="col-lg-5" style="margin: 20px 0px 0px 20px;">
+                                    <label>Switches</label>
+                                        <div class="form-group">
+                                            <div class="col-xs-6">
+                                                <div class="led-box" style="margin: 20px 0px 0px 0px;">
+                                                    <div id="tank2_pump1" ng-click="toggle(tank2_pump1_led, $event)" class="{{tank2_pump1_led}}"></div>
+                                                    <p>Pump</p>
+                                                </div>
+                                            </div> 
+                                            <div class="col-xs-6">
+                                                <div class="led-box" style="margin: 20px 0px 0px 0px;">
+                                                    <div id="tank2_peris1" ng-click="toggle(tank2_peris1_led, $event)" class="{{tank2_peris1_led}}"></div>
+                                                    <p>Peristaltic No. 1</p>
+                                                </div>
+                                                <div class="led-box" style="margin: 20px 0px 0px 0px;">
+                                                    <div id="tank2_peris2" ng-click="toggle(tank2_peris2_led, $event)" class="{{tank2_peris2_led}}"></div>
+                                                    <p>Persitaltic No. 2</p>
+                                                </div>   
+                                            </div>                                            
+                                        </div>  
+                                    </div>
+                                    <div class="col-lg-5" style="margin: 20px 0px 0px 20px;">
+                                        <div ng-show="t2sensorDropdown=='wtemp'" class="form-group">
+                                            <label>Water Temperature</label>
+                                            <input class="form-control" ng-model="tank2_input_wtemp_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="tank2_input_wtemp_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>
+                                        <div ng-show="t2sensorDropdown=='etemp'" class="form-group">
+                                            <label>Environment Temperature</label>
+                                            <input class="form-control" ng-model="tank2_input_etemp_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="tank2_input_etemp_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>
+                                        <div ng-show="t2sensorDropdown=='epressure'" class="form-group">
+                                            <label>Environment Pressure</label>
+                                            <input class="form-control" ng-model="tank2_input_epressure_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="tank2_input_epressure_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>                                        
+                                    </div>
+                                    <div ng-show="t2sensorDropdown=='wtemp'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="tank2_wtemp_actions">
+                                    </div>
+                                    <div ng-show="t2sensorDropdown=='etemp'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="tank2_etemp_actions">
+                                    </div>
+                                    <div ng-show="t2sensorDropdown=='epressure'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="tank2_epressure_actions">
+                                    </div>
+                                    <!-- end col-lg-6 -->
+                                    <!-- Possible Option/Combobox for JSON ACTIONS
+                                    <div class="col-lg-10" style="margin: 20px 20px 0px 20px;">
+                                    <label>Update Actions</label>
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <select ng-model="minmaxDropdown">
+                                                <option value="min">Min</option>
+                                                <option value="max">Max</option>
+                                                </select>
+                                                <select ng-model="actionDropdown">
+                                                <option value="on">On</option>
+                                                <option value="off">Off</option>
+                                                <option value="cmd">CMD</option>
+                                                <option value="alert">ALERT</option>
+                                                </select>
+                                                <p>Destination Tank</p>
+                                                <select ng-model="destDropdown">
+                                                <option value="holding">Holding Tank</option>
+                                                <option value="tank1">Tank 1</option>
+                                                <option value="tank2">Tank 2</option>
+                                                <option value="tank3">Tank 3</option>
+                                                </select>
+                                            </div>                                           
+                                        </div> 
+                                    </div>
+                                    -->
+
+                                    <div class="col-lg-12">
+                                        <button type="submit" class="btn btn-lg btn-success btn-block" style="margin: 20px 0px 0px 0px;">Submit</button>   
+                                    </div>
+                                </div>
+                            </form>
+                            <form ng-show="tankDropdown=='tank3'" ng-submit="panelInput()">
+                                <div class="row">
+                                    <div class="col-lg-5" style="margin: 20px 0px 0px 20px;">
+                                    <label>Switches</label>
+                                        <div class="form-group">
+                                            <div class="col-xs-6">
+                                                <div class="led-box" style="margin: 20px 0px 0px 0px;">
+                                                    <div id="tank3_uv_array" ng-click="toggle(tank3_uv_array, $event)" class="{{tank3_uv_array}}"></div>
+                                                    <p>UV Array</p>
+                                                </div>
+                                                <div class="led-box" style="margin: 20px 0px 0px 0px;">
+                                                    <div id="tank3_uv_panel" ng-click="toggle(tank3_uv_panel, $event)" class="{{tank3_uv_panel}}"></div>
+                                                    <p>UV Panel</p>
+                                                </div>
+                                            </div> 
+                                            <div class="col-xs-6">
+                                                <div class="led-box" style="margin: 20px 0px 0px 0px;">
+                                                    <div id="tank3_pump" ng-click="toggle(tank3_pump_led, $event)" class="{{tank3_pump_led}}"></div>
+                                                    <p>Pump</p>
+                                                </div>
+                                                <div class="led-box" style="margin: 20px 0px 0px 0px;">
+                                                    <div id="tank3_bubbler1" ng-click="toggle(tank3_bubbler1_led, $event)" class="{{tank3_bubbler1_led}}"></div>
+                                                    <p>Bubbler 1</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="led-box" style="margin: 20px 0px 0px 0px;">
+                                                    <div id="tank3_bubbler2" ng-click="toggle(tank3_bubbler2_led, $event)" class="{{tank3_bubbler2_led}}"></div>
+                                                    <p>Bubbler 2</p>
+                                                </div>
+                                            </div>                                           
+                                        </div>                                        
+                                    </div>
+                                    <div class="col-lg-5" style="margin: 20px 0px 0px 20px;">
+                                        <div ng-show="t3sensorDropdown=='wtemp'" class="form-group">
+                                            <label>Water Temperature</label>
+                                            <input class="form-control" ng-model="tank3_input_wtemp_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="tank3_input_wtemp_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>
+                                        <div ng-show="t3sensorDropdown=='etemp'" class="form-group">
+                                            <label>Environment Temperature</label>
+                                            <input class="form-control" ng-model="tank3_input_etemp_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="tank3_input_etemp_high" style="margin: 1px 0px 0px 0px;">
+
+                                        </div>
+                                        <div ng-show="t3sensorDropdown=='epressure'" class="form-group">
+                                            <label>Environment Pressure</label>
+                                            <input class="form-control" ng-model="tank3_input_epressure_low" style="margin: 1px 0px 0px 0px;">
+                                            <input class="form-control" ng-model="tank3_input_epressure_high" style="margin: 1px 0px 0px 0px;">
+ 
+                                        </div>                                        
+                                    </div>
+                                    <div ng-show="t3sensorDropdown=='wtemp'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="tank3_wtemp_actions">
+                                    </div>
+                                    <div ng-show="t3sensorDropdown=='etemp'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="tank3_etemp_actions">
+                                    </div>
+                                    <div ng-show="t3sensorDropdown=='epressure'" class="col-lg-12" style="margin: 20px 20px 0px 20px;">
+                                        <label>Update Actions</label>
+                                        <input class="form-control" ng-model="tank3_epressure_actions">
+                                    </div>
+                                    <!-- end col-lg-6 -->
+                                    <!-- Possible Option/Combobox for JSON ACTIONS
+                                    <div class="col-lg-10" style="margin: 20px 20px 0px 20px;">
+                                    <label>Update Actions</label>
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <select ng-model="minmaxDropdown">
+                                                <option value="min">Min</option>
+                                                <option value="max">Max</option>
+                                                </select>
+                                                <select ng-model="actionDropdown">
+                                                <option value="on">On</option>
+                                                <option value="off">Off</option>
+                                                <option value="cmd">CMD</option>
+                                                <option value="alert">ALERT</option>
+                                                </select>
+                                                <p>Destination Tank</p>
+                                                <select ng-model="destDropdown">
+                                                <option value="holding">Holding Tank</option>
+                                                <option value="tank1">Tank 1</option>
+                                                <option value="tank2">Tank 2</option>
+                                                <option value="tank3">Tank 3</option>
+                                                </select>
+                                            </div>                                           
+                                        </div> 
+                                    </div>
+                                    -->
+                                    <div class="col-lg-12">
+                                        <button type="submit" class="btn btn-lg btn-success btn-block" style="margin: 20px 0px 0px 0px;">Submit</button>   
+                                    </div>
+                                </div>
+                            </form>
+                    </div>   
+                    <!-- End of Panel Body--> 
+                </div>
+                <!-- End of Holding Tank Section-->
+            </div>
+            <!-- /.col-lg-8 -->
+ 
+        </div>
+    </div>
+    <!-- end page-wrapper-->
+</div>
+<!-- /#wrapper -->
+
